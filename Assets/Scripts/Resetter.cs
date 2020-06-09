@@ -14,6 +14,6 @@ public class Resetter : MonoBehaviour
 
     public void ResetRig()
     {
-        Utils.FullResetRig(transform, resetables, physicsRootChild);
+        PhysicsRigUtils.FullResetRig(transform, resetables, physicsRootChild);
     }
 }

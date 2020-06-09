@@ -6,41 +6,41 @@ public class DebugControls : MonoBehaviour
 {    
     public void ToggleKinematic(bool toggle)
     {
-        Utils.ToggleRigKinematic(transform, toggle);
+        PhysicsRigUtils.ToggleRigKinematic(transform, toggle);
     }
 
     public void ResetRigPhysics()
     {
-        Utils.ResetRigPhysics(transform);
+        PhysicsRigUtils.ResetRigPhysics(transform);
     }
 
     public void ResetRigTransformMove()
     {
-        Utils.ResetRigTransform(transform, true);
+        PhysicsRigUtils.ResetRigTransform(transform, true);
     }
 
     public void ResetRigTransform()
     {
-        Utils.ResetRigTransform(transform, false);
+        PhysicsRigUtils.ResetRigTransform(transform, false);
     }
 
     public void ResetRigTransformCached()
     {
-        Utils.ResetRigTransform(transform, false, true);
+        PhysicsRigUtils.ResetRigTransform(transform, false, true);
     }
 
     public void ResetRigTransformMoveCached()
     {
-        Utils.ResetRigTransform(transform, true, true);
+        PhysicsRigUtils.ResetRigTransform(transform, true, true);
     }
 
     public void FixChildJoints()
     {
-        Utils.FixChildJointsAfterScalingParent(transform);
+        PhysicsRigUtils.FixChildJointsAfterScalingParent(transform);
     }
 
     public void MoveParentToCenterOfChild()
     {
-        Utils.MoveParentToCenterOfChildren(transform);
+        PhysicsRigUtils.MoveParentToCenterOfChildren(transform);
     }
 }

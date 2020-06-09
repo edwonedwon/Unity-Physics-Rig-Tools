@@ -19,9 +19,9 @@ public class Scaler : MonoBehaviour
 
     void OnScaleBegin()
     {
-        Utils.ToggleRigKinematic(resetables, true);
-        Utils.MoveParentToCenterOfChild(transform, physicsRootChild);
-        Utils.CacheRig(resetables);
+        PhysicsRigUtils.ToggleRigKinematic(resetables, true);
+        PhysicsRigUtils.MoveParentToCenterOfChild(transform, physicsRootChild);
+        PhysicsRigUtils.CacheRig(resetables);
     }
 
     void OnScaleUpdate(float scale)
@@ -31,10 +31,10 @@ public class Scaler : MonoBehaviour
 
     void OnScaleEnd()
     {
-        Utils.ResetRigTransform(resetables, false);
-        Utils.FixChildJointsAfterScalingParent(transform);
-        Utils.ResetRigTransform(resetables, false, true);
-        Utils.ToggleRigKinematic(resetables, false);
+        PhysicsRigUtils.ResetRigTransform(resetables, false);
+        PhysicsRigUtils.FixChildJointsAfterScalingParent(transform);
+        PhysicsRigUtils.ResetRigTransform(resetables, false, true);
+        PhysicsRigUtils.ToggleRigKinematic(resetables, false);
     }
 
     public void OnSliderBegin()

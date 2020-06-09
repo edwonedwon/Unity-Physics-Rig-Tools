@@ -5,18 +5,18 @@ using UnityEngine;
 using System;
 using UnityEngine.Video;
 
-public class Utils : MonoBehaviour
+public class PhysicsRigUtils : MonoBehaviour
 {
     public static void FullResetRig(Transform parent, ResetableRigidbody[] resetables, Transform physicsRootChild = null)
     {
-        Utils.ToggleRigKinematic(resetables, true);
+        ToggleRigKinematic(resetables, true);
         if (physicsRootChild)
-            Utils.MoveParentToCenterOfChild(parent, physicsRootChild);
+            MoveParentToCenterOfChild(parent, physicsRootChild);
         else
-            Utils.MoveParentToCenterOfChildren(parent);
-        Utils.ResetRigTransform(resetables, false);
-        Utils.FixChildJointsAfterScalingParent(parent);
-        Utils.ToggleRigKinematic(resetables, false);
+            MoveParentToCenterOfChildren(parent);
+        ResetRigTransform(resetables, false);
+        FixChildJointsAfterScalingParent(parent);
+        ToggleRigKinematic(resetables, false);
     }
 
     public static void ToggleRigKinematic(Transform parent, bool toggle)
