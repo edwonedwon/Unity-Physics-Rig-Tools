@@ -15,6 +15,7 @@ public struct ConfigurableJointSettings
 	public float rbMass;
 	public float rbDrag;
 	public float rbAngularDrag;
+	public RigidbodyInterpolation interpolation;
 	[Header("Motion")]
 	public bool useMotionSettings;
 	public ConfigurableJointMotion positionMotion;
@@ -88,6 +89,7 @@ public class ConfigurableJointControl : MonoBehaviour
 		rb.mass = settings.rbMass;
 		rb.drag = settings.rbDrag;
 		rb.angularDrag = settings.rbAngularDrag;
+		rb.interpolation = settings.interpolation;
 
 		// motion settings
 		if (settings.useMotionSettings)
@@ -132,6 +134,7 @@ public class ConfigurableJointControl : MonoBehaviour
 		settings.rbMass = 1;
 		settings.rbDrag = 5;
 		settings.rbAngularDrag = 0.5f;
+		settings.interpolation = RigidbodyInterpolation.Interpolate;
 
 		// motion settings
 		settings.useMotionSettings = true;
