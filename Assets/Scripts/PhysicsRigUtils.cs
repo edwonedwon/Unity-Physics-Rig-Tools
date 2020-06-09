@@ -5,8 +5,31 @@ using UnityEngine;
 using System;
 using UnityEngine.Video;
 
-public class PhysicsRigUtils : MonoBehaviour
+public class PhysicsRigUtils
 {
+    public static void ScaleStart(Transform parent, ResetableRigidbody[] resetables, Transform physicsRootChild = null)
+    {
+        PhysicsRigUtils.ToggleRigKinematic(resetables, true);
+        if (physicsRootChild)
+            PhysicsRigUtils.MoveParentToCenterOfChild(parent, physicsRootChild);
+        else
+            PhysicsRigUtils.MoveParentToCenterOfChildren(parent);
+        PhysicsRigUtils.CacheRig(resetables);
+    }
+
+    public static void ScaleUpdate(Transform parent, Vector3 scale)
+    {
+        parent.localScale = scale;
+    }
+
+    public static void ScaleEnd(Transform parent, ResetableRigidbody[] resetables)
+    {
+        PhysicsRigUtils.ResetRigTransform(resetables, false);
+        PhysicsRigUtils.FixChildJointsAfterScalingParent(parent);
+        PhysicsRigUtils.ResetRigTransform(resetables, false, true);
+        PhysicsRigUtils.ToggleRigKinematic(resetables, false);
+    }
+
     public static void FullResetRig(Transform parent, ResetableRigidbody[] resetables, Transform physicsRootChild = null)
     {
         ToggleRigKinematic(resetables, true);
