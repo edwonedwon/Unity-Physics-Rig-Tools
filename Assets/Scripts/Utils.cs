@@ -41,24 +41,24 @@ public class Utils : MonoBehaviour
         }
     }
 
-    public static void ResetRigTransform(Transform parent,bool useMovePositionRotation = true, bool useCached = false)
+    public static void ResetRigTransform(Transform parent,bool useMove = true, bool useCached = false)
     {
         ResetableRigidbody[] resetables = parent.GetComponentsInChildren<ResetableRigidbody>();
-        ResetRigTransformPrivate(resetables, useCached);
+        ResetRigTransformPrivate(resetables, useMove, useCached);
     }
 
-    public static void ResetRigTransform(ResetableRigidbody[] resetables, bool useMovePositionRotation = true, bool useCached = false)
+    public static void ResetRigTransform(ResetableRigidbody[] resetables, bool useMove, bool useCached = false)
     {
-        ResetRigTransformPrivate(resetables, useCached);
+        ResetRigTransformPrivate(resetables, useMove, useCached);
     }
 
-    static void ResetRigTransformPrivate(ResetableRigidbody[] resetables, bool useMovePositionRotation = true, bool useCached = false)
+    static void ResetRigTransformPrivate(ResetableRigidbody[] resetables, bool useMove = true, bool useCached = false)
     {
         if (resetables == null || resetables.Length == 0)
             return;
 
         foreach (ResetableRigidbody resetable in resetables)
-            resetable.ResetRigTransform(useMovePositionRotation, useCached);
+            resetable.ResetRigTransform(useMove, useCached);
     }
 
     public static void ResetRigPhysics(Transform parent)

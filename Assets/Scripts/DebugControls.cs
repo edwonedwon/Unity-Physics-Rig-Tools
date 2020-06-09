@@ -24,6 +24,16 @@ public class DebugControls : MonoBehaviour
         Utils.ResetRigTransform(transform, false);
     }
 
+    public void ResetRigTransformCached()
+    {
+        Utils.ResetRigTransform(transform, false, true);
+    }
+
+    public void ResetRigTransformMoveCached()
+    {
+        Utils.ResetRigTransform(transform, true, true);
+    }
+
     public void FixChildJoints()
     {
         Utils.FixChildJointsAfterScalingParent(transform);

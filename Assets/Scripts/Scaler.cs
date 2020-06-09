@@ -21,6 +21,7 @@ public class Scaler : MonoBehaviour
     {
         Utils.ToggleRigKinematic(resetables, true);
         Utils.MoveParentToCenterOfChild(transform, physicsRootChild);
+        Utils.CacheRig(resetables);
     }
 
     void OnScaleUpdate(float scale)
@@ -32,6 +33,7 @@ public class Scaler : MonoBehaviour
     {
         Utils.ResetRigTransform(resetables, false);
         Utils.FixChildJointsAfterScalingParent(transform);
+        Utils.ResetRigTransform(resetables, false, true);
         Utils.ToggleRigKinematic(resetables, false);
     }
 
