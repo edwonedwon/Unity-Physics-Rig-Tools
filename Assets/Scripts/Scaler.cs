@@ -7,7 +7,7 @@ public class Scaler : MonoBehaviour
 {
     public Slider slider;
     float startScale;
-    public Transform physicsRootChild;
+    public Transform scalePivot;
     ResetableRigidbody[] resetables;
 
     void Awake()
@@ -20,7 +20,7 @@ public class Scaler : MonoBehaviour
     void OnScaleBegin()
     {
         PhysicsRigUtils.ToggleRigKinematic(resetables, true);
-        PhysicsRigUtils.MoveParentToCenterOfChild(transform, physicsRootChild);
+        PhysicsRigUtils.MoveParentToCenterOfTransform(transform, scalePivot);
         PhysicsRigUtils.CacheRig(resetables);
     }
 

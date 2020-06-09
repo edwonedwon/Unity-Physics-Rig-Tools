@@ -7,11 +7,11 @@ using UnityEngine.Video;
 
 public class PhysicsRigUtils
 {
-    public static void ScaleStart(Transform parent, ResetableRigidbody[] resetables, Transform physicsRootChild = null)
+    public static void ScaleStart(Transform parent, ResetableRigidbody[] resetables, Transform scalePivot = null)
     {
         PhysicsRigUtils.ToggleRigKinematic(resetables, true);
-        if (physicsRootChild)
-            PhysicsRigUtils.MoveParentToCenterOfChild(parent, physicsRootChild);
+        if (scalePivot)
+            PhysicsRigUtils.MoveParentToCenterOfTransform(parent, scalePivot);
         else
             PhysicsRigUtils.MoveParentToCenterOfChildren(parent);
         PhysicsRigUtils.CacheRig(resetables);
@@ -30,11 +30,11 @@ public class PhysicsRigUtils
         PhysicsRigUtils.ToggleRigKinematic(resetables, false);
     }
 
-    public static void FullResetRig(Transform parent, ResetableRigidbody[] resetables, Transform physicsRootChild = null)
+    public static void FullResetRig(Transform parent, ResetableRigidbody[] resetables, Transform scalePivot = null)
     {
         ToggleRigKinematic(resetables, true);
-        if (physicsRootChild)
-            MoveParentToCenterOfChild(parent, physicsRootChild);
+        if (scalePivot)
+            MoveParentToCenterOfTransform(parent, scalePivot);
         else
             MoveParentToCenterOfChildren(parent);
         ResetRigTransform(resetables, false);
@@ -181,7 +181,7 @@ public class PhysicsRigUtils
         }
     }
 
-    public static void MoveParentToCenterOfChild(Transform parent, Transform child)
+    public static void MoveParentToCenterOfTransform(Transform parent, Transform scalePivot)
     {
         int childCount = parent.childCount;
         Transform[] children = new Transform[childCount];
@@ -193,8 +193,8 @@ public class PhysicsRigUtils
         {
             children[i].parent = null;
         }
-        parent.position = child.position;
-        parent.rotation = child.rotation;
+        parent.position = scalePivot.position;
+        parent.rotation = scalePivot.rotation;
         for (int i = 0; i < childCount; i++)
         {
             children[i].parent = parent;
