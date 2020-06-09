@@ -2186,7 +2186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slider: {fileID: 288147592}
-  rootChild: {fileID: 679241700}
+  physicsRootChild: {fileID: 679241700}
 --- !u!114 &1029169410
 MonoBehaviour:
   m_ObjectHideFlags: 0

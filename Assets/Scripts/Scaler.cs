@@ -7,18 +7,20 @@ public class Scaler : MonoBehaviour
 {
     public Slider slider;
     float startScale;
-    public Transform rootChild;
+    public Transform physicsRootChild;
+    ResetableRigidbody[] resetables;
 
     void Awake()
     {
+        resetables = GetComponentsInChildren<ResetableRigidbody>();
         startScale = transform.lossyScale.x;
         slider.value = startScale;
     }
 
     void OnScaleBegin()
     {
-        // Utils.MoveParentToCenterOfChild(transform, rootChild);
-        // Utils.ToggleRigKinematic(true, transform);
+        Utils.ToggleRigKinematic(resetables, true);
+        Utils.MoveParentToCenterOfChild(transform, physicsRootChild);
     }
 
     void OnScaleUpdate(float scale)
@@ -28,10 +30,9 @@ public class Scaler : MonoBehaviour
 
     void OnScaleEnd()
     {
-        // Utils.FixChildJointsAfterScalingParent(transform);
-        // Utils.ResetRigTransform(transform, false, false);
-        // Utils.ToggleRigKinematic(false, transform);
-        // Utils.ResetRigPhysics(transform);
+        Utils.ResetRigTransform(resetables, false);
+        Utils.FixChildJointsAfterScalingParent(transform);
+        Utils.ToggleRigKinematic(resetables, false);
     }
 
     public void OnSliderBegin()
