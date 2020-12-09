@@ -1,7 +1,7 @@
 {
   "name": "com.edwon.unityphysicsrigtools",
-  "version": "1.0.0",
-  "displayName": "Unity Physics Rig Tools",
+  "version": "1.0.1",
+  "displayName": "Physics Rig Tools",
   "description": "Unity tools for making physics based animation rigs",
   "unity": "2019.2",
   "unityRelease": "0f1",
