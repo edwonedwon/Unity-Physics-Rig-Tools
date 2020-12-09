@@ -11,5 +11,12 @@
     "email": "edwon@edwon.tv",
     "url": "https://www.edwon.tv"
   },
-  "type": "tool"
+  "type": "tool",
+  "samples": [
+    {
+      "displayName": "Sample",
+      "description": "all the samples",
+      "path": "Samples"
+    }
+  ]
 }
