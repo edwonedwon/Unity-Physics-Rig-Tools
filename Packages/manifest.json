@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "com.edwon.unityphysicsrigtools": "1.0.0",
-    "com.unity.ide.vscode": "1.1.4",
-    "com.unity.test-framework": "1.1.11",
+    "com.edwon.unitytools": "https://github.com/edwonia/Unity-Tools.git?path=/Packages/Unity Tools#1.0.8",
+    "com.unity.ide.visualstudio": "2.0.3",
+    "com.unity.ide.vscode": "1.2.3",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",

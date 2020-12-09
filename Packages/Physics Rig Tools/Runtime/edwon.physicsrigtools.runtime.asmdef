@@ -1,6 +1,8 @@
 {
     "name": "edwon.physicsrigtools.runtime",
-    "references": [],
+    "references": [
+        "GUID:37304346b391343f2aff74fdaa3c395d"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
@@ -8,5 +10,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": []
+    "versionDefines": [],
+    "noEngineReferences": false
 }
