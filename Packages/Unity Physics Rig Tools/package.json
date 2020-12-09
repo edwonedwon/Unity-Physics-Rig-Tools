@@ -1,0 +1,15 @@
+{
+  "name": "com.edwon.unityphysicsrigtools",
+  "version": "1.0.0",
+  "displayName": "Unity Physics Rig Tools",
+  "description": "Unity tools for making physics based animation rigs",
+  "unity": "2019.2",
+  "unityRelease": "0f1",
+  "keywords": [],
+  "author": {
+    "name": "Edwon",
+    "email": "edwon@edwon.tv",
+    "url": "https://www.edwon.tv"
+  },
+  "type": "tool"
+}

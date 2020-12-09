@@ -64,7 +64,7 @@ public class PhysicsRigUtils
         }
     }
 
-    public static void ResetRigTransform(Transform parent,bool useMove = true, bool useCached = false)
+    public static void ResetRigTransform(Transform parent, bool useMove = true, bool useCached = false)
     {
         ResetableRigidbody[] resetables = parent.GetComponentsInChildren<ResetableRigidbody>();
         ResetRigTransformPrivate(resetables, useMove, useCached);
@@ -109,8 +109,8 @@ public class PhysicsRigUtils
     {
         Joint[] joints = parent.GetComponentsInChildren<Joint>();
         if (joints == null || joints.Length == 0)
-            return; 
-        
+            return;
+
         FixChildJointsAfterScalingParentPrivate(parent, joints);
     }
 
@@ -173,7 +173,7 @@ public class PhysicsRigUtils
             average += children[i].position;
             children[i].parent = null;
         }
-        Vector3 center = average/childCount;
+        Vector3 center = average / childCount;
         parent.position = center;
         for (int i = 0; i < childCount; i++)
         {
