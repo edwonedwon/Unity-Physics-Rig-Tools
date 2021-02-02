@@ -9,6 +9,8 @@ namespace Edwon.PhysicsRigTools
     public class RigScaler : MonoBehaviour
     {
         public bool setScaleOnAwake;
+        public enum ScaleOnAwakeType{Instant, Tweened};
+        public ScaleOnAwakeType setScaleOnAwakeType;
         public float scaleOnAwake = 1;
         ResetableRigidbody[] resetableRigidbodies;
         Joint[] joints;
@@ -29,7 +31,12 @@ namespace Edwon.PhysicsRigTools
             joints = GetComponentsInChildren<Joint>();
 
             if (setScaleOnAwake)
-                SetScale(scaleOnAwake);
+            {
+                if (setScaleOnAwakeType == ScaleOnAwakeType.Instant)
+                    SetScale(scaleOnAwake);
+                else if (setScaleOnAwakeType == ScaleOnAwakeType.Tweened)
+                    TweenScaleTo(scaleOnAwake);
+            }
         }
 
         public void SetScale(float toScale)
