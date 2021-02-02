@@ -2,38 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveWithMouse : MonoBehaviour
+namespace Edwon.PhysicsRigTools
 {
-    public Camera cam;
-    Rigidbody rb;
-    public float distance;
-
-    void Awake()
+    public class MoveWithMouse : MonoBehaviour
     {
-        rb = GetComponent<Rigidbody>();
-    }
+        public Camera cam;
+        Rigidbody rb;
+        public float distance;
 
-    void FixedUpdate()
-    {
-        if (MouseInputUIBlocker.BlockedByUI)
-            return;
-
-        if (Input.GetMouseButton(0))
+        void Awake()
         {
-            rb.isKinematic = true;
-            Move();
+            rb = GetComponent<Rigidbody>();
         }
-        if (Input.GetMouseButtonUp(0))
-        {
-            rb.isKinematic = false;
-        }
-    }
 
-    void Move()
-    {
-        Vector3 screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
-        Vector3 worldPoint = cam.ScreenToWorldPoint(screenPoint);
-        rb.MovePosition(worldPoint);
-        rb.MoveRotation(Quaternion.identity);
+        void FixedUpdate()
+        {
+            if (MouseInputUIBlocker.BlockedByUI)
+                return;
+
+            if (Input.GetMouseButton(0))
+            {
+                rb.isKinematic = true;
+                Move();
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                rb.isKinematic = false;
+            }
+        }
+
+        void Move()
+        {
+            Vector3 screenPoint = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance);
+            Vector3 worldPoint = cam.ScreenToWorldPoint(screenPoint);
+            rb.MovePosition(worldPoint);
+            rb.MoveRotation(Quaternion.identity);
+        }
     }
 }

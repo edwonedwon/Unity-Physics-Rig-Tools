@@ -4,72 +4,75 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-[RequireComponent(typeof(Rigidbody))]
-public class ResetableRigidbody : MonoBehaviour 
+namespace Edwon.PhysicsRigTools
 {
-    Rigidbody rb;
-    Vector3 localPositionStart;
-    Quaternion localRotationStart;
-    Vector3 centerOfMassStart;
-    Vector3 inertiaTensorStart;
-
-    [NonSerialized]
-    Vector3 localPositionCached;
-    [NonSerialized]
-    Quaternion localRotationCached;
-
-    ConfigurableJoint joint;
-
-    void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class ResetableRigidbody : MonoBehaviour 
     {
-        rb = GetComponent<Rigidbody>();
-        centerOfMassStart = rb.centerOfMass;
-        inertiaTensorStart = rb.inertiaTensor;
-        SetStartLocalPositionRotation();
-    }
+        Rigidbody rb;
+        Vector3 localPositionStart;
+        Quaternion localRotationStart;
+        Vector3 centerOfMassStart;
+        Vector3 inertiaTensorStart;
 
-    public void ResetRigPhysics() 
-    {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        // rb.inertiaTensor = inertiaTensorStart;
-        // rb.centerOfMass = centerOfMassStart;
-        // rb.ResetCenterOfMass();
-        // rb.ResetInertiaTensor();
-    }
+        [NonSerialized]
+        Vector3 localPositionCached;
+        [NonSerialized]
+        Quaternion localRotationCached;
 
-    // ONLY CALL THIS WHILE KINEMATIC
-    public void ResetRigTransform(bool useMovePositionRotation = true, bool useCached = false)
-    {
-        if (useMovePositionRotation)
+        ConfigurableJoint joint;
+
+        void Awake()
         {
-            Vector3 localPosition = useCached ? localPositionCached : localPositionStart;
-            Quaternion localRotation = useCached ? localRotationCached : localRotationStart;
-            Quaternion worldRotation = transform.parent.rotation * localRotation;
-            rb.MovePosition(transform.parent.TransformPoint(localPosition));
-            rb.MoveRotation(worldRotation);
+            rb = GetComponent<Rigidbody>();
+            centerOfMassStart = rb.centerOfMass;
+            inertiaTensorStart = rb.inertiaTensor;
+            SetStartLocalPositionRotation();
         }
-        else
+
+        public void ResetRigPhysics() 
         {
-            transform.localPosition = useCached ? localPositionCached : localPositionStart;
-            transform.localRotation = useCached ? localRotationCached : localRotationStart;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            // rb.inertiaTensor = inertiaTensorStart;
+            // rb.centerOfMass = centerOfMassStart;
+            // rb.ResetCenterOfMass();
+            // rb.ResetInertiaTensor();
         }
-    }
 
-    public void ToggleKinematic(bool toggle)
-    {
-        rb.isKinematic = toggle;
-    }
+        // ONLY CALL THIS WHILE KINEMATIC
+        public void ResetRigTransform(bool useMovePositionRotation = true, bool useCached = false)
+        {
+            if (useMovePositionRotation)
+            {
+                Vector3 localPosition = useCached ? localPositionCached : localPositionStart;
+                Quaternion localRotation = useCached ? localRotationCached : localRotationStart;
+                Quaternion worldRotation = transform.parent.rotation * localRotation;
+                rb.MovePosition(transform.parent.TransformPoint(localPosition));
+                rb.MoveRotation(worldRotation);
+            }
+            else
+            {
+                transform.localPosition = useCached ? localPositionCached : localPositionStart;
+                transform.localRotation = useCached ? localRotationCached : localRotationStart;
+            }
+        }
 
-    void SetStartLocalPositionRotation()
-    {
-        localPositionStart = transform.localPosition;
-        localRotationStart = transform.localRotation;
-    }
+        public void ToggleKinematic(bool toggle)
+        {
+            rb.isKinematic = toggle;
+        }
 
-    public void CacheTransform() 
-    {
-        localPositionCached = transform.localPosition;
-        localRotationCached = transform.localRotation;
+        void SetStartLocalPositionRotation()
+        {
+            localPositionStart = transform.localPosition;
+            localRotationStart = transform.localRotation;
+        }
+
+        public void CacheTransform() 
+        {
+            localPositionCached = transform.localPosition;
+            localRotationCached = transform.localRotation;
+        }
     }
 }

@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Resetter : MonoBehaviour
+namespace Edwon.PhysicsRigTools
 {
-    public Transform physicsRootChild;
-    ResetableRigidbody[] resetables;
-
-    void Awake()
+    public class Resetter : MonoBehaviour
     {
-        resetables = GetComponentsInChildren<ResetableRigidbody>();
-    }
+        public Transform physicsRootChild;
+        ResetableRigidbody[] resetables;
 
-    public void ResetRig()
-    {
-        PhysicsRigUtils.FullResetRig(transform, resetables, physicsRootChild);
+        void Awake()
+        {
+            resetables = GetComponentsInChildren<ResetableRigidbody>();
+        }
+
+        public void ResetRig()
+        {
+            PhysicsRigUtils.FullResetRig(transform, resetables, physicsRootChild);
+        }
     }
 }

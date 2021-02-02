@@ -1,7 +1,9 @@
 {
     "name": "edwon.physicsrigtools.runtime",
+    "rootNamespace": "",
     "references": [
-        "GUID:37304346b391343f2aff74fdaa3c395d"
+        "GUID:37304346b391343f2aff74fdaa3c395d",
+        "GUID:688cfbbe2a536604ab4aa06ececa1da3"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
