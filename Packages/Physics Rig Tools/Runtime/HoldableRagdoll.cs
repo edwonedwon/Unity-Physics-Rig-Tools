@@ -17,7 +17,6 @@ namespace Edwon.PhysicsRigTools
         bool isHeld;
         public bool IsHeld {get{ return isHeld;}}
         public Holder holderLast {get; set;}
-        public Transform ragdollParent;
         public Rigidbody rigidbodyToHold;
         public bool isKinematicWhileHeld = false;
         [Header("Smooth Move Settings")]
@@ -76,8 +75,8 @@ namespace Edwon.PhysicsRigTools
             if (isKinematicWhileHeld)
             {
                 Utils.ToggleColliders(colliders, false, collidersDontToggle);
-                ragdollParent.position = holder.transform.position;
-                ragdollParent.rotation = holder.transform.rotation;
+                rigidbodyToHold.transform.position = holder.transform.position;
+                rigidbodyToHold.transform.rotation = holder.transform.rotation;
             }
             else
             {
@@ -101,18 +100,18 @@ namespace Edwon.PhysicsRigTools
             if (isKinematicWhileHeld)
             {
                 targetRotation = GetTargetRotation(holder.transform.rotation, holder.transform.rotation);
-                targetPosition = GetTargetPosition(ragdollParent.transform.position, holder.transform.position);
+                targetPosition = GetTargetPosition(rigidbodyToHold.transform.position, holder.transform.position);
             }
             else
             {
-                targetPosition = GetTargetPosition(ragdollParent.transform.position, rigidbodyToHold.transform.position);
+                targetPosition = GetTargetPosition(rigidbodyToHold.transform.position, rigidbodyToHold.transform.position);
                 targetRotation = GetTargetRotation(rigidbodyToHold.transform.rotation, holder.transform.rotation);
             }
 
             if (isKinematicWhileHeld)
             {
-                ragdollParent.transform.position = targetPosition;
-                ragdollParent.transform.rotation = targetRotation;        
+                rigidbodyToHold.transform.position = targetPosition;
+                rigidbodyToHold.transform.rotation = targetRotation;        
             }
             else
             {

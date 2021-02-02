@@ -25,7 +25,6 @@ namespace Edwon.PhysicsRigTools
         
         [Header("Setup")]
         public Rigidbody rigidbodyToDrag;
-        public Transform ragdollParent;
 
         [Header("Debug")]
         public bool debugLog;
@@ -138,12 +137,12 @@ namespace Edwon.PhysicsRigTools
             else
             {
                 // LERP
-                Vector3 targetPositionSmooth = Vector3.SmoothDamp(ragdollParent.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
-                Quaternion targetRotationSmooth = Quaternion.RotateTowards(ragdollParent.transform.rotation, targetRotation, rotateTime);
+                Vector3 targetPositionSmooth = Vector3.SmoothDamp(rigidbodyToDrag.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
+                Quaternion targetRotationSmooth = Quaternion.RotateTowards(rigidbodyToDrag.transform.rotation, targetRotation, rotateTime);
                 // MOVE ragdollparent
-                ragdollParent.position = targetPositionSmooth;
+                rigidbodyToDrag.transform.position = targetPositionSmooth;
                 if (setRotation)
-                    ragdollParent.rotation = targetRotationSmooth;
+                    rigidbodyToDrag.transform.rotation = targetRotationSmooth;
             }
         }
 
