@@ -45,10 +45,11 @@ namespace Edwon.PhysicsRigTools
         ResetableRigidbody[] resetableRigidbodies;
         List<Rigidbody> rigidbodies;
         Vector3 velocity = Vector3.zero;
-
+        LeanSelectable selectable;
         
         void Awake()
         {
+            selectable = GetComponent<LeanSelectable>();
             draggingEnabled = true;
             rigScaler = GetComponent<RigScaler>();
             playerCamera = Camera.main;
@@ -162,6 +163,48 @@ namespace Edwon.PhysicsRigTools
             isDragged = false;
 
             rigidbodyToDrag.isKinematic = false;
+        }
+
+        void OnSelect(LeanFinger finger)
+		{
+            OnDragBegin(finger);
+		}
+
+		void OnSelectUpdate(LeanFinger finger)
+		{
+            OnDragUpdate(finger);
+		}
+
+		void OnSelectUp(LeanFinger finger)
+		{
+            OnDragEnd(finger);
+		}
+
+        void OnDeselect()
+		{
+
+		}
+
+        void OnEnable()
+        {
+            if (selectable != null)
+            {
+                selectable.OnSelect.AddListener(OnSelect);
+                selectable.OnSelectUpdate.AddListener(OnSelectUpdate);
+                selectable.OnSelectUp.AddListener(OnSelectUp);
+                selectable.OnDeselect.AddListener(OnDeselect);
+            }
+        }
+
+        void OnDisable()
+        {
+            if (selectable != null)
+            {
+                selectable.OnSelect.RemoveListener(OnSelect);
+                selectable.OnSelectUp.RemoveListener(OnSelectUp);
+                selectable.OnSelectUpdate.RemoveListener(OnSelectUpdate);
+                selectable.OnDeselect.RemoveListener(OnDeselect);
+            }
         }
     }
 }
