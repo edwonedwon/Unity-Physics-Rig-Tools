@@ -36,7 +36,7 @@ namespace Edwon.PhysicsRigTools
                 if (setScaleOnAwakeType == ScaleOnAwakeType.Instant)
                     SetScale(scaleOnAwake, scaleOnAwakeIsKinematicAfter);
                 else if (setScaleOnAwakeType == ScaleOnAwakeType.Tweened)
-                    TweenScaleTo(scaleOnAwake);
+                    TweenScaleTo(scaleOnAwake, scaleOnAwakeIsKinematicAfter);
             }
         }
 
@@ -67,7 +67,7 @@ namespace Edwon.PhysicsRigTools
         public bool debugSetScaleWithTween;
         public void DebugSetScaleWithTween()
         {
-            TweenScaleTo(debugTweenScaleTo);
+            TweenScaleTo(debugTweenScaleTo, false);
         }
 
         public void TweenScaleTo(float toScale, bool isKinematicAfter = false)
@@ -76,7 +76,7 @@ namespace Edwon.PhysicsRigTools
             OnScaleStart();
             float currentScale = transform.lossyScale.x;
             DOTween.To(OnScaleUpdate, currentScale, toScale, tweenDuration)
-                .OnComplete(()=> OnTweenScaleEnd(scaleOnAwakeIsKinematicAfter))
+                .OnComplete(()=> OnTweenScaleEnd(isKinematicAfter))
                 .SetEase(tweenEase);
         }
 
@@ -87,7 +87,7 @@ namespace Edwon.PhysicsRigTools
 
         public void TweenScaleToSetValue()
         {
-            TweenScaleTo(tweenScaleToSetValue);
+            TweenScaleTo(tweenScaleToSetValue, false);
         }
 
         void OnTweenScaleEnd(bool isKinematicAfter)
