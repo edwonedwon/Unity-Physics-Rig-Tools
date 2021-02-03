@@ -12,6 +12,7 @@ namespace Edwon.PhysicsRigTools
         public enum ScaleOnAwakeType{Instant, Tweened};
         public ScaleOnAwakeType setScaleOnAwakeType;
         public float scaleOnAwake = 1;
+        public bool scaleOnAwakeIsKinematicAfter = false;
         ResetableRigidbody[] resetableRigidbodies;
         Joint[] joints;
         public float tweenDuration = 1f;
@@ -33,17 +34,17 @@ namespace Edwon.PhysicsRigTools
             if (setScaleOnAwake)
             {
                 if (setScaleOnAwakeType == ScaleOnAwakeType.Instant)
-                    SetScale(scaleOnAwake);
+                    SetScale(scaleOnAwake, scaleOnAwakeIsKinematicAfter);
                 else if (setScaleOnAwakeType == ScaleOnAwakeType.Tweened)
                     TweenScaleTo(scaleOnAwake);
             }
         }
 
-        public void SetScale(float toScale)
+        public void SetScale(float toScale, bool isKinematicAfter = false)
         {
             OnScaleStart();
             OnScaleUpdate(toScale);
-            PhysicsRigUtils.ScaleEnd(transform, resetableRigidbodies);
+            PhysicsRigUtils.ScaleEnd(transform, resetableRigidbodies, isKinematicAfter);
         }
 
         public void SetScaleWhileKinematic(float toScale)
@@ -69,13 +70,13 @@ namespace Edwon.PhysicsRigTools
             TweenScaleTo(debugTweenScaleTo);
         }
 
-        public void TweenScaleTo(float toScale)
+        public void TweenScaleTo(float toScale, bool isKinematicAfter = false)
         {
             tweening = true;
             OnScaleStart();
             float currentScale = transform.lossyScale.x;
             DOTween.To(OnScaleUpdate, currentScale, toScale, tweenDuration)
-                .OnComplete(OnTweenScaleEnd)
+                .OnComplete(()=> OnTweenScaleEnd(scaleOnAwakeIsKinematicAfter))
                 .SetEase(tweenEase);
         }
 
@@ -89,10 +90,10 @@ namespace Edwon.PhysicsRigTools
             TweenScaleTo(tweenScaleToSetValue);
         }
 
-        void OnTweenScaleEnd()
+        void OnTweenScaleEnd(bool isKinematicAfter)
         {
             tweening = false;
-            PhysicsRigUtils.ScaleEnd(transform, resetableRigidbodies);
+            PhysicsRigUtils.ScaleEnd(transform, resetableRigidbodies, isKinematicAfter);
             onTweenScaleEnd.Invoke();
         }
     }

@@ -24,12 +24,12 @@ namespace Edwon.PhysicsRigTools
             parent.localScale = scale;
         }
 
-        public static void ScaleEnd(Transform parent, ResetableRigidbody[] resetables)
+        public static void ScaleEnd(Transform parent, ResetableRigidbody[] resetables, bool isKinematicAfter = false)
         {
             PhysicsRigUtils.ResetRigTransform(resetables, false);
             PhysicsRigUtils.FixChildJointsAfterScalingParent(parent);
             PhysicsRigUtils.ResetRigTransform(resetables, false, true);
-            PhysicsRigUtils.ToggleRigKinematic(resetables, false);
+            PhysicsRigUtils.ToggleRigKinematic(resetables, isKinematicAfter);
         }
 
         public static void FullResetRig(Transform parent, ResetableRigidbody[] resetables, Transform scalePivot = null)

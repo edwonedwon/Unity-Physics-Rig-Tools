@@ -18,7 +18,9 @@ namespace Edwon.PhysicsRigTools
         public bool IsHeld {get{ return isHeld;}}
         public Holder holderLast {get; set;}
         public Rigidbody rigidbodyToHold;
-        public bool isKinematicWhileHeld = false;
+        public enum IsKinematicOption {None, RigidbodyToHold, All}
+        public IsKinematicOption isKinematicOption;
+        public Transform holdPoint;
         [Header("Smooth Move Settings")]
         public float moveTime = 0.05f;
         public float moveMaxSpeed = 40f;
@@ -46,6 +48,8 @@ namespace Edwon.PhysicsRigTools
 
         void Awake()
         {
+            if (holdPoint == null)
+                Debug.Log("hold point is null on " + gameObject.name);
             destroyable = GetComponent<IDestroyable>();
             colliders = GetComponentsInChildren<Collider>();
             SetInterpolation();
@@ -72,13 +76,20 @@ namespace Edwon.PhysicsRigTools
             if (debugLog)
                 Debug.Log(gameObject.name + "OnHold " + gameObject.name + " To:" + _holder.name);
 
-            if (isKinematicWhileHeld)
+            if (isKinematicOption == IsKinematicOption.RigidbodyToHold)
             {
                 Utils.ToggleColliders(colliders, false, collidersDontToggle);
                 rigidbodyToHold.transform.position = holder.transform.position;
                 rigidbodyToHold.transform.rotation = holder.transform.rotation;
             }
-            else
+            else if (isKinematicOption == IsKinematicOption.All)
+            {
+                PhysicsRigUtils.ToggleRigKinematic(transform, true);
+                Utils.ToggleColliders(colliders, false, collidersDontToggle);
+                transform.position = ParentPositionWithHoldPointOffset(holder.transform.position);
+                transform.rotation = holder.transform.rotation;
+            }
+            else if (isKinematicOption == IsKinematicOption.None)
             {
                 rigidbodyToHold.isKinematic = true;
                 rigidbodyToHold.MovePosition(holder.transform.position);
@@ -97,30 +108,30 @@ namespace Edwon.PhysicsRigTools
             Vector3 targetPosition = Vector3.zero;
             Quaternion targetRotation = Quaternion.identity;
 
-            if (isKinematicWhileHeld)
+            if (isKinematicOption == IsKinematicOption.RigidbodyToHold || isKinematicOption == IsKinematicOption.All)
             {
-                targetRotation = GetTargetRotation(holder.transform.rotation, holder.transform.rotation);
-                targetPosition = GetTargetPosition(rigidbodyToHold.transform.position, holder.transform.position);
+                targetPosition = SmoothPosition(rigidbodyToHold.transform.position, holder.transform.position);
+                targetRotation = SmoothRotation(holder.transform.rotation, holder.transform.rotation);
             }
-            else
+            else if (isKinematicOption == IsKinematicOption.None)
             {
-                targetPosition = GetTargetPosition(rigidbodyToHold.transform.position, rigidbodyToHold.transform.position);
-                targetRotation = GetTargetRotation(rigidbodyToHold.transform.rotation, holder.transform.rotation);
+                targetPosition = SmoothPosition(rigidbodyToHold.transform.position, rigidbodyToHold.transform.position);
+                targetRotation = SmoothRotation(rigidbodyToHold.transform.rotation, holder.transform.rotation);
             }
 
-            if (isKinematicWhileHeld)
+            if (isKinematicOption == IsKinematicOption.RigidbodyToHold || isKinematicOption == IsKinematicOption.All)
             {
-                rigidbodyToHold.transform.position = targetPosition;
-                rigidbodyToHold.transform.rotation = targetRotation;        
+                transform.position = ParentPositionWithHoldPointOffset(targetPosition);
+                transform.rotation = targetRotation;        
             }
-            else
+            else if (isKinematicOption == IsKinematicOption.None)
             {
                 rigidbodyToHold.MovePosition(targetPosition);
                 rigidbodyToHold.MoveRotation(targetRotation);
             }
         }
 
-        Vector3 GetTargetPosition(Vector3 current, Vector3 target)
+        Vector3 SmoothPosition(Vector3 current, Vector3 target)
         {
             if (SmoothMovement)
                 return Vector3.SmoothDamp(current, target, ref velocity, moveTime, moveMaxSpeed);
@@ -128,7 +139,7 @@ namespace Edwon.PhysicsRigTools
                 return target;
         }
 
-        Quaternion GetTargetRotation(Quaternion current, Quaternion target)
+        Quaternion SmoothRotation(Quaternion current, Quaternion target)
         {
             if (SmoothMovement)
                 return Quaternion.RotateTowards(current, target, rotateTime);
@@ -136,17 +147,23 @@ namespace Edwon.PhysicsRigTools
                 return target;
         }
 
+        Vector3 ParentPositionWithHoldPointOffset(Vector3 targetPosition)
+        {
+            Vector3 difference = transform.position - holdPoint.position;
+            return targetPosition + difference;
+        }
+
         public void OnRelease()
         {
             if (debugLog)
                 Debug.Log("OnRelease " + gameObject.name);
 
-            if (isKinematicWhileHeld)    
+            if (isKinematicOption == IsKinematicOption.RigidbodyToHold || isKinematicOption == IsKinematicOption.All)    
             {
                 PhysicsRigUtils.ToggleRigKinematic(transform, false);
                 Utils.ToggleColliders(colliders, true, collidersDontToggle);
             }
-            else
+            else if (isKinematicOption == IsKinematicOption.None)    
             {
                 rigidbodyToHold.isKinematic = false;
             }
