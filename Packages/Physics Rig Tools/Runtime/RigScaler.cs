@@ -34,20 +34,20 @@ namespace Edwon.PhysicsRigTools
             if (setScaleOnAwake)
             {
                 if (setScaleOnAwakeType == ScaleOnAwakeType.Instant)
-                    SetScale(scaleOnAwake, scaleOnAwakeIsKinematicAfter);
+                    ScaleTo(scaleOnAwake, scaleOnAwakeIsKinematicAfter);
                 else if (setScaleOnAwakeType == ScaleOnAwakeType.Tweened)
                     TweenScaleTo(scaleOnAwake, scaleOnAwakeIsKinematicAfter);
             }
         }
 
-        public void SetScale(float toScale, bool isKinematicAfter = false)
+        public void ScaleTo(float toScale, bool isKinematicAfter = false)
         {
             OnScaleStart();
             OnScaleUpdate(toScale);
             PhysicsRigUtils.ScaleEnd(transform, resetableRigidbodies, isKinematicAfter);
         }
 
-        public void SetScaleWhileKinematic(float toScale)
+        public void ScaleToWhileKinematic(float toScale)
         {
             float ratioScale = toScale * kinematicScaleRatio;
             transform.localScale = new Vector3(ratioScale, ratioScale, ratioScale);

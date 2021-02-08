@@ -131,7 +131,7 @@ namespace Edwon.PhysicsRigTools
         {
             if (!isDragged)
                 return;
-                
+
             if (rigScaler.tweening)
                 UpdateMoveParent();
             else
@@ -143,7 +143,6 @@ namespace Edwon.PhysicsRigTools
             Vector3 targetPositionSmooth = Vector3.SmoothDamp(rigidbodyToDrag.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
             Quaternion targetRotationSmooth = Quaternion.RotateTowards(rigidbodyToDrag.transform.rotation, targetRotation, rotateTime);
 
-            Debug.Log("move parent to: " + targetPositionSmooth);
             ragdollParent.position = targetPositionSmooth;
             if (setRotation)
                 ragdollParent.transform.rotation = targetRotationSmooth;
@@ -151,7 +150,6 @@ namespace Edwon.PhysicsRigTools
 
         void UpdateMoveRigidbodyToDrag()
         {
-            Debug.Log("move rigidbody to drag");
             Vector3 targetPositionSmooth = Vector3.SmoothDamp(rigidbodyToDrag.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
             Quaternion targetRotationSmooth = Quaternion.RotateTowards(rigidbodyToDrag.transform.rotation, targetRotation, rotateTime);
 
