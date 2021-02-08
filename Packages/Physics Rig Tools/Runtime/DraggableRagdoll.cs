@@ -140,8 +140,8 @@ namespace Edwon.PhysicsRigTools
 
         void UpdateMoveParent()
         {
-            Vector3 targetPositionSmooth = Vector3.SmoothDamp(rigidbodyToDrag.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
-            Quaternion targetRotationSmooth = Quaternion.RotateTowards(rigidbodyToDrag.transform.rotation, targetRotation, rotateTime);
+            Vector3 targetPositionSmooth = Vector3.SmoothDamp(ragdollParent.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
+            Quaternion targetRotationSmooth = Quaternion.RotateTowards(ragdollParent.transform.rotation, targetRotation, rotateTime);
 
             ragdollParent.position = targetPositionSmooth;
             if (setRotation)
