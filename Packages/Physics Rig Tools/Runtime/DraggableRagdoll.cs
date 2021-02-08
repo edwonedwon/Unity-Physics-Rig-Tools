@@ -125,27 +125,39 @@ namespace Edwon.PhysicsRigTools
                 Vector3 forward = Vector3.ProjectOnPlane(playerCamera.transform.position - hit.point, Vector3.up);
                 targetRotation = Quaternion.LookRotation(forward, Vector3.up);
             }
+        }
 
-            if (!rigScaler.tweening)
-            {
-                // LERP
-                Vector3 targetPositionSmooth = Vector3.SmoothDamp(rigidbodyToDrag.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
-                Quaternion targetRotationSmooth = Quaternion.RotateTowards(rigidbodyToDrag.transform.rotation, targetRotation, rotateTime);
-                // MOVE rigidbodyToDrag
-                rigidbodyToDrag.MovePosition(targetPositionSmooth);
-                if (setRotation)
-                    rigidbodyToDrag.MoveRotation(targetRotationSmooth);
-            }
-            else // if rigScaler is tweening right now
-            {
-                // LERP
-                Vector3 targetPositionSmooth = Vector3.SmoothDamp(rigidbodyToDrag.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
-                Quaternion targetRotationSmooth = Quaternion.RotateTowards(rigidbodyToDrag.transform.rotation, targetRotation, rotateTime);
-                // MOVE ragdollparent
-                ragdollParent.position = targetPositionSmooth;
-                if (setRotation)
-                    ragdollParent.transform.rotation = targetRotationSmooth;
-            }
+        void LateUpdate()
+        {
+            if (!isDragged)
+                return;
+                
+            if (rigScaler.tweening)
+                UpdateMoveParent();
+            else
+                UpdateMoveRigidbodyToDrag();
+        }
+
+        void UpdateMoveParent()
+        {
+            Vector3 targetPositionSmooth = Vector3.SmoothDamp(rigidbodyToDrag.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
+            Quaternion targetRotationSmooth = Quaternion.RotateTowards(rigidbodyToDrag.transform.rotation, targetRotation, rotateTime);
+
+            Debug.Log("move parent to: " + targetPositionSmooth);
+            ragdollParent.position = targetPositionSmooth;
+            if (setRotation)
+                ragdollParent.transform.rotation = targetRotationSmooth;
+        }
+
+        void UpdateMoveRigidbodyToDrag()
+        {
+            Debug.Log("move rigidbody to drag");
+            Vector3 targetPositionSmooth = Vector3.SmoothDamp(rigidbodyToDrag.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
+            Quaternion targetRotationSmooth = Quaternion.RotateTowards(rigidbodyToDrag.transform.rotation, targetRotation, rotateTime);
+
+            rigidbodyToDrag.MovePosition(targetPositionSmooth);
+            if (setRotation)
+                rigidbodyToDrag.MoveRotation(targetRotationSmooth);
         }
 
         public void OnDragEnd(LeanFinger finger)
