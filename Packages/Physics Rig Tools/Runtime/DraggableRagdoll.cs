@@ -12,8 +12,10 @@ namespace Edwon.PhysicsRigTools
     [RequireComponent(typeof(RigScaler))]
     public class DraggableRagdoll : MonoBehaviour, IDraggable
     {
-        [Header("Options")]
-        public bool setRotation = false;
+        [Header("Setup")]
+        public Rigidbody rigidbodyToDrag;
+        [Header("the parent transform, will be moved while whole ragdoll is kinematic")]
+        public Transform ragdollParent;
 
         [Header("Lerp")]
         public PlacementType placementType;
@@ -22,12 +24,9 @@ namespace Edwon.PhysicsRigTools
         public float moveTime;  
         public float moveMaxSpeed;
         public float rotateTime;
-        
-        [Header("Setup")]
-        [Header("the rigidbody that will be moved while dragging")]
-        public Rigidbody rigidbodyToDrag;
-        [Header("the parent transform, will be moved while whole ragdoll is kinematic")]
-        public Transform ragdollParent;
+
+        [Header("Options")]
+        public bool setRotation = false;
 
         [Header("Debug")]
         public bool debugLog;
