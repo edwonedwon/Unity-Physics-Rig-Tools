@@ -24,7 +24,10 @@ namespace Edwon.PhysicsRigTools
         public float rotateTime;
         
         [Header("Setup")]
+        [Header("the rigidbody that will be moved while dragging")]
         public Rigidbody rigidbodyToDrag;
+        [Header("the parent transform, will be moved while whole ragdoll is kinematic")]
+        public Transform ragdollParent;
 
         [Header("Debug")]
         public bool debugLog;
@@ -134,15 +137,15 @@ namespace Edwon.PhysicsRigTools
                 if (setRotation)
                     rigidbodyToDrag.MoveRotation(targetRotationSmooth);
             }
-            else
+            else // if rigScaler is tweening right now
             {
                 // LERP
                 Vector3 targetPositionSmooth = Vector3.SmoothDamp(rigidbodyToDrag.transform.position, targetPosition, ref velocity, moveTime, moveMaxSpeed);
                 Quaternion targetRotationSmooth = Quaternion.RotateTowards(rigidbodyToDrag.transform.rotation, targetRotation, rotateTime);
                 // MOVE ragdollparent
-                rigidbodyToDrag.transform.position = targetPositionSmooth;
+                ragdollParent.position = targetPositionSmooth;
                 if (setRotation)
-                    rigidbodyToDrag.transform.rotation = targetRotationSmooth;
+                    ragdollParent.transform.rotation = targetRotationSmooth;
             }
         }
 
