@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Lean.Common;
 using Lean.Touch;
 using Edwon.Tools;
 
@@ -176,6 +177,8 @@ namespace Edwon.PhysicsRigTools
             rigidbodyToDrag.isKinematic = false;
         }
 
+        // TODO - need to reconnect these to Lean events, because Lean broke them
+
         void OnSelect(LeanFinger finger)
 		{
             OnDragBegin(finger);
@@ -195,27 +198,5 @@ namespace Edwon.PhysicsRigTools
 		{
 
 		}
-
-        void OnEnable()
-        {
-            if (selectable != null)
-            {
-                selectable.OnSelect.AddListener(OnSelect);
-                selectable.OnSelectUpdate.AddListener(OnSelectUpdate);
-                selectable.OnSelectUp.AddListener(OnSelectUp);
-                selectable.OnDeselect.AddListener(OnDeselect);
-            }
-        }
-
-        void OnDisable()
-        {
-            if (selectable != null)
-            {
-                selectable.OnSelect.RemoveListener(OnSelect);
-                selectable.OnSelectUp.RemoveListener(OnSelectUp);
-                selectable.OnSelectUpdate.RemoveListener(OnSelectUpdate);
-                selectable.OnDeselect.RemoveListener(OnDeselect);
-            }
-        }
     }
 }
