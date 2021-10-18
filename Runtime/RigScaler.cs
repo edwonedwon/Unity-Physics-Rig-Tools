@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if EDWON_DOTWEEN
 using DG.Tweening;
+#endif
 using UnityEngine.Events;
 
 namespace Edwon.PhysicsRigTools
@@ -16,7 +18,9 @@ namespace Edwon.PhysicsRigTools
         ResetableRigidbody[] resetableRigidbodies;
         Joint[] joints;
         public float tweenDuration = 1f;
+        #if EDWON_DOTWEEN
         public Ease tweenEase;
+        #endif
         [Header("if TweenScaleToSetValue is called, this value will be used")]
         public float tweenScaleToSetValue = 1f;
         public float kinematicScaleRatio = 1f;
@@ -75,9 +79,11 @@ namespace Edwon.PhysicsRigTools
             tweening = true;
             OnScaleStart();
             float currentScale = transform.lossyScale.x;
+            #if EDWON_DOTWEEN
             DOTween.To(OnScaleUpdate, currentScale, toScale, tweenDuration)
                 .OnComplete(()=> OnTweenScaleEnd(isKinematicAfter))
                 .SetEase(tweenEase);
+            #endif
         }
 
         public void SetTweenScaleToSetValue(float value)
