@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Lean.Common;
-using Lean.Touch;
 using Edwon.Tools;
 
 namespace Edwon.PhysicsRigTools
@@ -47,11 +45,9 @@ namespace Edwon.PhysicsRigTools
         ResetableRigidbody[] resetableRigidbodies;
         List<Rigidbody> rigidbodies;
         Vector3 velocity = Vector3.zero;
-        LeanSelectable selectable;
         
         void Awake()
         {
-            selectable = GetComponent<LeanSelectable>();
             draggingEnabled = true;
             rigScaler = GetComponent<RigScaler>();
             playerCamera = Camera.main;
@@ -67,11 +63,7 @@ namespace Edwon.PhysicsRigTools
             draggingEnabled = false;
         }
 
-        public void OnDragBegin(LeanFinger finger)
-        {
-            OnDragBegin(finger.ScreenPosition);
-        }
-
+        // need to call this from some touch plugin
         public void OnDragBegin(Vector2 screenPos)
         {
             if (!draggingEnabled)
@@ -85,11 +77,7 @@ namespace Edwon.PhysicsRigTools
             rigidbodyToDrag.isKinematic = true;
         }
 
-        public void OnDragUpdate(LeanFinger finger)
-        {
-            OnDragUpdate(finger.ScreenPosition);
-        }
-
+        // need to call this from some touch plugin
         public void OnDragUpdate(Vector2 screenPos)
         {
             if (!draggingEnabled)
@@ -128,6 +116,20 @@ namespace Edwon.PhysicsRigTools
             }
         }
 
+        // need to call this from some touch plugin
+        public void OnDragEnd(Vector2 screenPos)
+        {
+            if (!draggingEnabled)
+                return;
+                
+            if (debugLog)
+                Debug.Log(gameObject.name + " OnDragEnd");
+
+            isDragged = false;
+
+            rigidbodyToDrag.isKinematic = false;
+        }
+
         void LateUpdate()
         {
             if (!isDragged)
@@ -158,45 +160,5 @@ namespace Edwon.PhysicsRigTools
             if (setRotation)
                 rigidbodyToDrag.MoveRotation(targetRotationSmooth);
         }
-
-        public void OnDragEnd(LeanFinger finger)
-        {
-            OnDragEnd(finger.ScreenPosition);
-        }
-
-        public void OnDragEnd(Vector2 screenPos)
-        {
-            if (!draggingEnabled)
-                return;
-                
-            if (debugLog)
-                Debug.Log(gameObject.name + " OnDragEnd");
-
-            isDragged = false;
-
-            rigidbodyToDrag.isKinematic = false;
-        }
-
-        // TODO - need to reconnect these to Lean events, because Lean broke them
-
-        void OnSelect(LeanFinger finger)
-		{
-            OnDragBegin(finger);
-		}
-
-		void OnSelectUpdate(LeanFinger finger)
-		{
-            OnDragUpdate(finger);
-		}
-
-		void OnSelectUp(LeanFinger finger)
-		{
-            OnDragEnd(finger);
-		}
-
-        void OnDeselect()
-		{
-
-		}
     }
 }
