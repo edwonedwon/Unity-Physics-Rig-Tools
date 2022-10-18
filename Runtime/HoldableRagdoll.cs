@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Edwon.Tools;
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 namespace Edwon.PhysicsRigTools
 {

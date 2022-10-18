@@ -5,6 +5,7 @@ using UnityEngine;
 using DG.Tweening;
 #endif
 using UnityEngine.Events;
+using Sirenix.OdinInspector;
 
 namespace Edwon.PhysicsRigTools
 {
