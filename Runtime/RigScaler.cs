@@ -27,7 +27,6 @@ namespace Edwon.PhysicsRigTools
         public float kinematicScaleRatio = 1f;
 
         public UnityEvent onTweenScaleEnd;
-        [ReadOnly]
         public bool tweening = false;
         public float debugTweenScaleTo = 1f;
 

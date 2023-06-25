@@ -14,7 +14,6 @@ namespace Edwon.PhysicsRigTools
         public Holder holder { get; set; }
         [SerializeField]
         [HideInInspector]
-        [ReadOnly]
         bool isHeld;
         public bool IsHeld {get{ return isHeld;}}
         public Holder holderLast {get; set;}

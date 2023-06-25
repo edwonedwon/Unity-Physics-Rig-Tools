@@ -31,10 +31,8 @@ namespace Edwon.PhysicsRigTools
         public bool debugLog;
         public bool debugDraw;
         [SerializeField]
-        [ReadOnly]
         bool isDragged;
         public bool IsDragged {get{ return isDragged;}}
-        [ReadOnly]
         [SerializeField]
         bool draggingEnabled;
 
