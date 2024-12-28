@@ -89,8 +89,8 @@ namespace Edwon.PhysicsRigTools
             // rigidbody settings
             rb.useGravity = settings.rbGravity;
             rb.mass = settings.rbMass;
-            rb.drag = settings.rbDrag;
-            rb.angularDrag = settings.rbAngularDrag;
+            rb.linearDamping = settings.rbDrag;
+            rb.angularDamping = settings.rbAngularDrag;
             rb.interpolation = settings.interpolation;
 
             // motion settings

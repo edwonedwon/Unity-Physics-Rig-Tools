@@ -32,7 +32,7 @@ namespace Edwon.PhysicsRigTools
 
         public void ResetRigPhysics() 
         {
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
             // rb.inertiaTensor = inertiaTensorStart;
             // rb.centerOfMass = centerOfMassStart;
